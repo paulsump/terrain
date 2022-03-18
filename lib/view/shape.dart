@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:terrain/model/math_3d.dart';
@@ -15,7 +14,7 @@ const noWarn = [out];
 
 get _light => vec_math.Vector3(0.0, 0.0, 1.0).normalized();
 
-/// The football widget
+/// The terrain widget
 class Shape extends StatelessWidget {
   const Shape({Key? key}) : super(key: key);
 
@@ -38,18 +37,17 @@ class Shape extends StatelessWidget {
         final b = vertices[face.b];
         final c = vertices[face.c];
 
-        if (a.z > 0 || b.z > 0 || c.z > 0) {
-          final normal = Math3d.normal(a, b, c).normalized();
+        final normal = Math3d.normal(a, b, c).normalized();
 
-          if (0 < normal.z) {
-            offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
+        // if (0 < normal.z) {
+        if (true) {
+          offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
 
-            colors.addAll(<Color>[
-              _getColor(a, color),
-              _getColor(b, color),
-              _getColor(c, color),
-            ]);
-          }
+          colors.addAll(<Color>[
+            _getColor(a, color),
+            _getColor(b, color),
+            _getColor(c, color),
+          ]);
         }
       }
     }
@@ -57,9 +55,7 @@ class Shape extends StatelessWidget {
   }
 }
 
-Color _getColor(
-  vec_math.Vector3 vertex,
-    Color color) {
+Color _getColor(vec_math.Vector3 vertex, Color color) {
   final brightness = _calcBrightness(vertex);
 
   return _calcColor(brightness, color);
