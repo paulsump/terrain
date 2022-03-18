@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:terrain/gestures/pan_zoom.dart';
 import 'package:terrain/model/generate.dart';
-import 'package:terrain/model/persist.dart';
 import 'package:terrain/model/shape_data.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/hue.dart';
@@ -17,7 +16,7 @@ import 'package:vector_math/vector_math_64.dart';
 
 /// prevent 'organise imports' from removing imports
 /// when temporarily commenting out.
-const noWarn = [out, unawaited, loadShapeData];
+const noWarn = [out, unawaited];
 
 void main() => runApp(createApp());
 

@@ -11,8 +11,6 @@ class Math3d {
   /// (usually the corners of a triangle)
   /// The result is not normalised.
   static Vector3 normal(Vector3 a, Vector3 b, Vector3 c) {
-    // TODO change the direction of these
-
     final Vector3 bVector = b - a;
     final Vector3 cVector = c - a;
 
