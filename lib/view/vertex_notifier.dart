@@ -17,18 +17,26 @@ VertexNotifier getVertexNotifier(BuildContext context,
 
 class VertexNotifier extends ChangeNotifier {
   late List<Vector3> vertices;
+  late List<Vector3> normals;
 
   void setTransform(Matrix4 transform, BuildContext context) {
     final shapeData = getShapeData(context, listen: false);
 
-    for (int i = 0; i < shapeData.vertices.length; ++i) {
-      vertices[i] = transform.transformed3(shapeData.vertices[i], vertices[i]);
+    final originalVertices = shapeData.vertices;
+    for (int i = 0; i < originalVertices.length; ++i) {
+      vertices[i] = transform.transformed3(originalVertices[i], vertices[i]);
+    }
+
+    final originalNormals = shapeData.normals;
+    for (int i = 0; i < originalNormals.length; ++i) {
+      normals[i] = transform.transformed3(originalNormals[i], normals[i]);
     }
 
     notifyListeners();
   }
 
-  void init(List<Vector3> list) {
-    vertices = list;
+  void init(List<Vector3> vertices_, List<Vector3> normals_) {
+    vertices = vertices_;
+    normals = normals_;
   }
 }

@@ -13,7 +13,10 @@ const noWarn = [out, generateShapeData];
 ShapeData getShapeData(BuildContext context, {required bool listen}) =>
     getShapeNotifier(context, listen: listen).shapeData;
 
-ShapeNotifier getShapeNotifier(BuildContext context, {required bool listen}) =>
+ShapeNotifier getShapeNotifier(
+  BuildContext context, {
+  required bool listen,
+}) =>
     Provider.of<ShapeNotifier>(context, listen: listen);
 
 /// Access to the [ShapeData].
@@ -35,10 +38,12 @@ class ShapeNotifier extends ChangeNotifier {
 class ShapeData {
   const ShapeData({
     required this.vertices,
+    required this.normals,
     required this.meshes,
   });
 
   final List<Vector3> vertices;
+  final List<Vector3> normals;
   final List<Mesh> meshes;
 }
 

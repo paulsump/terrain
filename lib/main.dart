@@ -56,9 +56,13 @@ class TheApp extends StatelessWidget {
                 final vertexNotifier =
                     getVertexNotifier(context, listen: false);
 
-                vertexNotifier.init(shapeData.vertices
-                    .map((vertex) => Vector3.copy(vertex))
-                    .toList());
+                vertexNotifier.init(
+                    shapeData.vertices
+                        .map((vertex) => Vector3.copy(vertex))
+                        .toList(),
+                    shapeData.normals
+                        .map((normal) => Vector3.copy(normal))
+                        .toList());
               }
               // final
               return WillPopScope(

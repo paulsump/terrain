@@ -25,6 +25,7 @@ class Shape extends StatelessWidget {
     final vertexNotifier = getVertexNotifier(context, listen: true);
 
     final vertices = vertexNotifier.vertices;
+    final normals = vertexNotifier.normals;
 
     final offsets = <Offset>[];
     final colors = <Color>[];
@@ -39,14 +40,13 @@ class Shape extends StatelessWidget {
 
         final normal = Math3d.normal(a, b, c).normalized();
 
-        // if (0 < normal.z) {
-        if (true) {
+        if (0 < normal.z) {
           offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
 
           colors.addAll(<Color>[
-            _getColor(a, color),
-            _getColor(b, color),
-            _getColor(c, color),
+            _getColor(normals[face.a], color),
+            _getColor(normals[face.b], color),
+            _getColor(normals[face.c], color),
           ]);
         }
       }
@@ -55,8 +55,8 @@ class Shape extends StatelessWidget {
   }
 }
 
-Color _getColor(vec_math.Vector3 vertex, Color color) {
-  final brightness = _calcBrightness(vertex);
+Color _getColor(vec_math.Vector3 normal, Color color) {
+  final brightness = _calcBrightness(normal);
 
   return _calcColor(brightness, color);
 }
