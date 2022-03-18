@@ -28,9 +28,7 @@ const double _patchScale = 0.85;
 ShapeData _subdivideFrequency3(ShapeData old) {
   final vertices = <Vector3>[...old.vertices];
 
-  final darkMeshes = <Mesh>[];
   final lightMeshes = <Mesh>[];
-
 
   for (final face in old.meshes.first.faces) {
     // face corners
@@ -66,23 +64,6 @@ ShapeData _subdivideFrequency3(ShapeData old) {
     lightMesh.add(Face(q2, s, q1));
     lightMesh.add(Face(r1, s, q2));
     lightMesh.add(Face(r2, s, r1));
-
-    final darkMesh = <Face>[];
-    darkMeshes.add(Mesh(faces: darkMesh));
-
-    // copy vertices for the dark pentagon
-    p1 = _getOrAdd(vertices[p1], vertices);
-    p2 = _getOrAdd(vertices[p2], vertices);
-    q1 = _getOrAdd(vertices[q1], vertices);
-    q2 = _getOrAdd(vertices[q2], vertices);
-    r1 = _getOrAdd(vertices[r1], vertices);
-    r2 = _getOrAdd(vertices[r2], vertices);
-
-    // outer 3 are dark
-    darkMesh.add(Face(face.a, p1, r2));
-    darkMesh.add(Face(face.b, q1, p2));
-    darkMesh.add(Face(face.c, r1, q2));
-
   }
 
   // scale the light hexagons
@@ -95,44 +76,9 @@ ShapeData _subdivideFrequency3(ShapeData old) {
     }
   }
 
-  var total = Vector3(0, 0, 0);
-
-  for (final darkMesh in darkMeshes) {
-    // north pole
-    if (darkMesh.faces[0].a == 0) {
-      // p1
-      total += vertices[darkMesh.faces[0].b];
-    }
-  }
-
-  // the distance to midpoint at north pole
-  final double darkLength = total.length / 5;
-
-  // pull all the dark centers in to this mid point
-  for (int i = 0; i < old.vertices.length; ++i) {
-    vertices[i].normalize();
-    vertices[i] *= darkLength;
-  }
-
-  // scale the dark pentagons
-  for (final darkMesh in darkMeshes) {
-    for (final face in darkMesh.faces) {
-      final origin = vertices[face.a];
-
-      vertices[face.b] =
-          Math3d.scaleFrom(_patchScale, vertices[face.b], origin);
-      vertices[face.c] =
-          Math3d.scaleFrom(_patchScale, vertices[face.c], origin);
-    }
-  }
-
   return ShapeData(
     vertices: vertices,
-    meshes: <Mesh>[
-      ...darkMeshes,
-      ...lightMeshes,
-    ],
-  );
+    meshes: lightMeshes);
 }
 
 /// add vector and return it's index
@@ -177,9 +123,7 @@ ShapeData _subdivide(ShapeData old) {
     }
   }
 
-  return ShapeData(
-    vertices: vertices,
-      meshes: meshes);
+  return ShapeData(vertices: vertices, meshes: meshes);
 }
 
 void _normalize(List<Vector3> vertices) {
@@ -261,7 +205,6 @@ final _triangle = ShapeData(
     Vector3(0, 1, 0),
   ],
   meshes: <Mesh>[
-    const Mesh(
-        faces: [Face(0, 1, 2)])
+    const Mesh(faces: [Face(0, 1, 2)])
   ],
 );
