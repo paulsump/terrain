@@ -1,9 +1,9 @@
 // © 2022, Paul Sumpner <sumpner@hotmail.com>
 
 import 'package:flutter/material.dart';
-import 'package:subdivide/view/hue.dart';
-import 'package:subdivide/view/screen_adjust.dart';
-import 'package:subdivide/view/unit_to_screen.dart';
+import 'package:terrain/view/hue.dart';
+import 'package:terrain/view/screen_adjust.dart';
+import 'package:terrain/view/unit_to_screen.dart';
 
 /// A simple quad, representing the ground.
 class Horizon extends StatelessWidget {

@@ -1,9 +1,9 @@
 // © 2022, Paul Sumpner <sumpner@hotmail.com>
 
 import 'package:flutter/material.dart';
-import 'package:subdivide/gestures/pan_zoom.dart';
-import 'package:subdivide/out.dart';
-import 'package:subdivide/view/screen_adjust.dart';
+import 'package:terrain/gestures/pan_zoom.dart';
+import 'package:terrain/out.dart';
+import 'package:terrain/view/screen_adjust.dart';
 
 const noWarn = out;
 

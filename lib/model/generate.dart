@@ -2,9 +2,9 @@
 
 import 'dart:core';
 
-import 'package:subdivide/model/math_3d.dart';
-import 'package:subdivide/model/shape_data.dart';
-import 'package:subdivide/out.dart';
+import 'package:terrain/model/math_3d.dart';
+import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 final noWarn = [_normalize, out, _triangle, _subdivide];

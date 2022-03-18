@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:subdivide/out.dart';
+import 'package:terrain/out.dart';
 
 const noWarn = out;
 

@@ -2,11 +2,11 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:subdivide/model/math_3d.dart';
-import 'package:subdivide/model/shape_data.dart';
-import 'package:subdivide/out.dart';
-import 'package:subdivide/view/triangles.dart';
-import 'package:subdivide/view/vertex_notifier.dart';
+import 'package:terrain/model/math_3d.dart';
+import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/out.dart';
+import 'package:terrain/view/triangles.dart';
+import 'package:terrain/view/vertex_notifier.dart';
 import 'package:vector_math/vector_math_64.dart' as vec_math;
 
 import 'triangles.dart';

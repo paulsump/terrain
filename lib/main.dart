@@ -4,15 +4,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:subdivide/gestures/pan_zoom.dart';
-import 'package:subdivide/model/generate.dart';
-import 'package:subdivide/model/persist.dart';
-import 'package:subdivide/model/shape_data.dart';
-import 'package:subdivide/out.dart';
-import 'package:subdivide/view/hue.dart';
-import 'package:subdivide/view/main_page.dart';
-import 'package:subdivide/view/screen_adjust.dart';
-import 'package:subdivide/view/vertex_notifier.dart';
+import 'package:terrain/gestures/pan_zoom.dart';
+import 'package:terrain/model/generate.dart';
+import 'package:terrain/model/persist.dart';
+import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/out.dart';
+import 'package:terrain/view/hue.dart';
+import 'package:terrain/view/main_page.dart';
+import 'package:terrain/view/screen_adjust.dart';
+import 'package:terrain/view/vertex_notifier.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 /// prevent 'organise imports' from removing imports

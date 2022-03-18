@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:subdivide/model/shape_data.dart';
-import 'package:subdivide/out.dart';
+import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 const noWarn = out;

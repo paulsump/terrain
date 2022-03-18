@@ -2,7 +2,7 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:subdivide/out.dart';
+import 'package:terrain/out.dart';
 
 const noWarn = out;
 

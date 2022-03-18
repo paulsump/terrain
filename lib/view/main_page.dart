@@ -1,11 +1,11 @@
 // © 2022, Paul Sumpner <sumpner@hotmail.com>
 
 import 'package:flutter/material.dart';
-import 'package:subdivide/gestures/gesturer.dart';
-import 'package:subdivide/out.dart';
-import 'package:subdivide/view/horizon.dart';
-import 'package:subdivide/view/hue.dart';
-import 'package:subdivide/view/rotating_shape.dart';
+import 'package:terrain/gestures/gesturer.dart';
+import 'package:terrain/out.dart';
+import 'package:terrain/view/horizon.dart';
+import 'package:terrain/view/hue.dart';
+import 'package:terrain/view/rotating_shape.dart';
 
 const noWarn = [out];
 

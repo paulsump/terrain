@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:subdivide/model/shape_data.dart';
-import 'package:subdivide/out.dart';
+import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/out.dart';
 
 const noWarn = out;
 

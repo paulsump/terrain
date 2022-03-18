@@ -1,8 +1,8 @@
 // © 2022, Paul Sumpner <sumpner@hotmail.com>
 
 import 'package:flutter/material.dart';
-import 'package:subdivide/gestures/gesture_handler.dart';
-import 'package:subdivide/gestures/pan_zoom.dart';
+import 'package:terrain/gestures/gesture_handler.dart';
+import 'package:terrain/gestures/pan_zoom.dart';
 
 /// Handle gestures, passing them to [PanZoomer].
 ///
