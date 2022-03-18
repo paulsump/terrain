@@ -13,7 +13,7 @@ final noWarn = [out, _triangle, _subdivide];
 Mesh generateMesh() {
   Mesh mesh = _triangle;
 
-  // mesh = _subdivide(mesh);
+  mesh = _subdivide(mesh);
 
   return mesh;
 }
