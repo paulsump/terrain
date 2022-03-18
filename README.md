@@ -17,7 +17,7 @@ might be tempted), just a simple mesh renderer.
 
 ### TODO
 
-Draw a grid Store vertex normals
+Draw a grid.
 
 Subdivide the heights too. See if using an average of local vertices is enough rather than a spline.
 
