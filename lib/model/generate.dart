@@ -58,7 +58,7 @@ ShapeData _subdivideFrequency3(ShapeData old) {
 
     // inner 6 are light
     final lightMesh = <Face>[];
-    lightMeshes.add(Mesh(faces: lightMesh, isDark: false));
+    lightMeshes.add(Mesh(faces: lightMesh));
 
     lightMesh.add(Face(p1, s, r2));
     lightMesh.add(Face(p2, s, p1));
@@ -67,9 +67,8 @@ ShapeData _subdivideFrequency3(ShapeData old) {
     lightMesh.add(Face(r1, s, q2));
     lightMesh.add(Face(r2, s, r1));
 
-
     final darkMesh = <Face>[];
-    darkMeshes.add(Mesh(faces: darkMesh, isDark: true));
+    darkMeshes.add(Mesh(faces: darkMesh));
 
     // copy vertices for the dark pentagon
     p1 = _getOrAdd(vertices[p1], vertices);
@@ -149,19 +148,16 @@ int _getOrAdd(Vector3 vector3, List<Vector3> vertices) {
 ShapeData _subdivide(ShapeData old) {
   final vertices = <Vector3>[...old.vertices];
 
-  final dark = <Face>[];
   final light = <Face>[];
 
-  final darkMesh = Mesh(faces: dark, isDark: true);
-  final lightMesh = Mesh(faces: light, isDark: false);
+  final lightMesh = Mesh(faces: light);
 
-  final meshes = <Mesh>[darkMesh, lightMesh];
+  final meshes = <Mesh>[lightMesh];
 
   for (final mesh in old.meshes) {
-    final faces = mesh.isDark ? darkMesh.faces : lightMesh.faces;
+    final faces = lightMesh.faces;
 
     for (final face in mesh.faces) {
-
       final a = vertices[face.a];
       final b = vertices[face.b];
       final c = vertices[face.c];
@@ -255,7 +251,6 @@ final _icosahedron = ShapeData(vertices: <Vector3>[
       Face(9, 10, 5),
       Face(10, 6, 1),
     ],
-    isDark: false,
   )
 ]);
 
@@ -267,8 +262,6 @@ final _triangle = ShapeData(
   ],
   meshes: <Mesh>[
     const Mesh(
-      faces: [Face(0, 1, 2)],
-      isDark: false,
-    )
+        faces: [Face(0, 1, 2)])
   ],
 );

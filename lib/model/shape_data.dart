@@ -45,12 +45,9 @@ class ShapeData {
 class Mesh {
   const Mesh({
     required this.faces,
-    required this.isDark,
   });
 
   final List<Face> faces;
-
-  final bool isDark;
 }
 
 class Face {

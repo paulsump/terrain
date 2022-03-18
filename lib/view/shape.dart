@@ -31,7 +31,7 @@ class Shape extends StatelessWidget {
     final colors = <Color>[];
 
     for (final mesh in shapeData.meshes) {
-      final Color color = mesh.isDark ? Colors.blueGrey : Colors.white60;
+      const Color color = Colors.white60;
 
       for (final face in mesh.faces) {
         final a = vertices[face.a];
