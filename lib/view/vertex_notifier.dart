@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -20,14 +20,14 @@ class VertexNotifier extends ChangeNotifier {
   late List<Vector3> normals;
 
   void setTransform(Matrix4 transform, BuildContext context) {
-    final shapeData = getShapeData(context, listen: false);
+    final mesh = getMesh(context, listen: false);
 
-    final originalVertices = shapeData.vertices;
+    final originalVertices = mesh.vertices;
     for (int i = 0; i < originalVertices.length; ++i) {
       vertices[i] = transform.transformed3(originalVertices[i], vertices[i]);
     }
 
-    final originalNormals = shapeData.normals;
+    final originalNormals = mesh.normals;
     for (int i = 0; i < originalNormals.length; ++i) {
       normals[i] = transform.transformed3(originalNormals[i], normals[i]);
     }

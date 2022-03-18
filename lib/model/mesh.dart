@@ -8,10 +8,10 @@ import 'package:terrain/model/generate.dart';
 import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-const noWarn = [out, generateShapeData];
+const noWarn = [out, generateMesh];
 
-ShapeData getShapeData(BuildContext context, {required bool listen}) =>
-    getShapeNotifier(context, listen: listen).shapeData;
+Mesh getMesh(BuildContext context, {required bool listen}) =>
+    getShapeNotifier(context, listen: listen).mesh;
 
 ShapeNotifier getShapeNotifier(
   BuildContext context, {
@@ -19,24 +19,26 @@ ShapeNotifier getShapeNotifier(
 }) =>
     Provider.of<ShapeNotifier>(context, listen: listen);
 
-/// Access to the [ShapeData].
+/// Access to the [Mesh].
 /// Generated in generate.dart, drawn by [Shape].
 class ShapeNotifier extends ChangeNotifier {
-  // late ShapeData _shapeData;
+  // late Mesh _mesh;
   //
-  // ShapeData get shapeData => _shapeData;
+  // Mesh get mesh => _mesh;
 
   //TODO remove HACK for quick hot reload
-  ShapeData get shapeData => generateShapeData();
+  Mesh get mesh => generateMesh();
 
-  void init(ShapeData shapeData_) {
-    // _shapeData = shapeData_;
+  void init(Mesh mesh_) {
+    // _mesh = mesh_;
   }
 }
 
+/// A triangle mesh with vertex positions and normals and vertex indices
+/// TODO MAybe replace Face list with indices list (contiguous groups of three indices).
 /// All the persisted data needed to render a 3d shape (terrain)
-class ShapeData {
-  const ShapeData({
+class Mesh {
+  const Mesh({
     required this.vertices,
     required this.normals,
     required this.faces,
@@ -50,5 +52,6 @@ class ShapeData {
 class Face {
   const Face(this.a, this.b, this.c);
 
+  /// Vertex indices of a triangle.
   final int a, b, c;
 }

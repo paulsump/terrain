@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:terrain/model/math_3d.dart';
-import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/triangles.dart';
 import 'package:terrain/view/vertex_notifier.dart';
@@ -20,7 +20,7 @@ class Shape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shapeData = getShapeData(context, listen: false);
+    final mesh = getMesh(context, listen: false);
 
     final vertexNotifier = getVertexNotifier(context, listen: true);
 
@@ -32,7 +32,7 @@ class Shape extends StatelessWidget {
 
     const Color color = Colors.white60;
 
-    for (final face in shapeData.faces) {
+    for (final face in mesh.faces) {
       final a = vertices[face.a];
       final b = vertices[face.b];
       final c = vertices[face.c];

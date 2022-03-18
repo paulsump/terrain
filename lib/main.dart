@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:terrain/gestures/pan_zoom.dart';
 import 'package:terrain/model/generate.dart';
-import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/hue.dart';
 import 'package:terrain/view/main_page.dart';
@@ -50,17 +50,17 @@ class TheApp extends StatelessWidget {
 
                 final shapeNotifier = getShapeNotifier(context, listen: false);
 
-                final shapeData = generateShapeData();
-                shapeNotifier.init(shapeData);
+                final mesh = generateMesh();
+                shapeNotifier.init(mesh);
 
                 final vertexNotifier =
                     getVertexNotifier(context, listen: false);
 
                 vertexNotifier.init(
-                    shapeData.vertices
+                    mesh.vertices
                         .map((vertex) => Vector3.copy(vertex))
                         .toList(),
-                    shapeData.normals
+                    mesh.normals
                         .map((normal) => Vector3.copy(normal))
                         .toList());
               }

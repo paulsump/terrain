@@ -2,7 +2,7 @@
 
 import 'dart:core';
 
-import 'package:terrain/model/shape_data.dart';
+import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -10,12 +10,12 @@ final noWarn = [out, _triangle, _subdivide];
 
 /// See README.md
 /// This function is the interface to this file
-ShapeData generateShapeData() {
-  ShapeData shapeData = _triangle;
+Mesh generateMesh() {
+  Mesh mesh = _triangle;
 
-  // shapeData = _subdivide(shapeData);
+  // mesh = _subdivide(mesh);
 
-  return shapeData;
+  return mesh;
 }
 
 /// add vector and return it's index
@@ -28,7 +28,7 @@ int _getOrAdd(Vector3 vector3, List<Vector3> vertices) {
 }
 
 /// See triangle_subdivide.png
-ShapeData _subdivide(ShapeData old) {
+Mesh _subdivide(Mesh old) {
   final vertices = <Vector3>[...old.vertices];
   final normals = <Vector3>[...old.normals];
 
@@ -66,12 +66,12 @@ ShapeData _subdivide(ShapeData old) {
     faces.add(Face(k, i, j));
   }
 
-  return ShapeData(vertices: vertices, normals: normals, faces: faces);
+  return Mesh(vertices: vertices, normals: normals, faces: faces);
 }
 
 //TODO MAKe final
-get _triangle => ShapeData(
-  vertices: [
+get _triangle => Mesh(
+      vertices: [
         Vector3(0, 0, 0),
         Vector3(1, 0, 0),
         Vector3(0, 1, 0),
