@@ -34,24 +34,16 @@ class ShapeNotifier extends ChangeNotifier {
   }
 }
 
-/// All the persisted data needed to render a 3d shape (football)
+/// All the persisted data needed to render a 3d shape (terrain)
 class ShapeData {
   const ShapeData({
     required this.vertices,
     required this.normals,
-    required this.meshes,
+    required this.faces,
   });
 
   final List<Vector3> vertices;
   final List<Vector3> normals;
-  final List<Mesh> meshes;
-}
-
-class Mesh {
-  const Mesh({
-    required this.faces,
-  });
-
   final List<Face> faces;
 }
 

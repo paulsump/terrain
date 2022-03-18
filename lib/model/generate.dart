@@ -32,53 +32,46 @@ ShapeData _subdivide(ShapeData old) {
   final vertices = <Vector3>[...old.vertices];
   final normals = <Vector3>[...old.normals];
 
-  final light = <Face>[];
-  final mesh = Mesh(faces: light);
+  final faces = <Face>[];
 
-  final meshes = <Mesh>[mesh];
+  for (final face in old.faces) {
+    final a = vertices[face.a];
+    final b = vertices[face.b];
+    final c = vertices[face.c];
 
-  for (final mesh in old.meshes) {
-    final faces = mesh.faces;
+    final an = normals[face.a];
+    final bn = normals[face.b];
+    final cn = normals[face.c];
 
-    for (final face in mesh.faces) {
-      final a = vertices[face.a];
-      final b = vertices[face.b];
-      final c = vertices[face.c];
+    final p = (a + b) / 2;
+    final q = (b + c) / 2;
+    final r = (c + a) / 2;
 
-      final an = normals[face.a];
-      final bn = normals[face.b];
-      final cn = normals[face.c];
+    // TODO including surrounding normals into the average
+    final pn = (an + bn) / 2;
+    final qn = (bn + cn) / 2;
+    final rn = (cn + an) / 2;
 
-      final p = (a + b) / 2;
-      final q = (b + c) / 2;
-      final r = (c + a) / 2;
+    final i = _getOrAdd(p, vertices);
+    final j = _getOrAdd(q, vertices);
+    final k = _getOrAdd(r, vertices);
 
-      // TODO including surrounding normals into the average
-      final pn = (an + bn) / 2;
-      final qn = (bn + cn) / 2;
-      final rn = (cn + an) / 2;
+    _getOrAdd(pn, normals);
+    _getOrAdd(qn, normals);
+    _getOrAdd(rn, normals);
 
-      final i = _getOrAdd(p, vertices);
-      final j = _getOrAdd(q, vertices);
-      final k = _getOrAdd(r, vertices);
-
-      _getOrAdd(pn, normals);
-      _getOrAdd(qn, normals);
-      _getOrAdd(rn, normals);
-
-      faces.add(Face(face.a, i, k));
-      faces.add(Face(i, face.b, j));
-      faces.add(Face(j, face.c, k));
-      faces.add(Face(k, i, j));
-    }
+    faces.add(Face(face.a, i, k));
+    faces.add(Face(i, face.b, j));
+    faces.add(Face(j, face.c, k));
+    faces.add(Face(k, i, j));
   }
 
-  return ShapeData(vertices: vertices, normals: normals, meshes: meshes);
+  return ShapeData(vertices: vertices, normals: normals, faces: faces);
 }
 
 //TODO MAKe final
 get _triangle => ShapeData(
-      vertices: [
+  vertices: [
         Vector3(0, 0, 0),
         Vector3(1, 0, 0),
         Vector3(0, 1, 0),
@@ -88,7 +81,5 @@ get _triangle => ShapeData(
         Vector3(0, 0, 1),
         Vector3(0, 0, 1),
       ],
-      meshes: <Mesh>[
-        const Mesh(faces: [Face(0, 1, 2)])
-      ],
+      faces: <Face>[const Face(0, 1, 2)],
     );

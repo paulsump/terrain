@@ -30,25 +30,23 @@ class Shape extends StatelessWidget {
     final offsets = <Offset>[];
     final colors = <Color>[];
 
-    for (final mesh in shapeData.meshes) {
-      const Color color = Colors.white60;
+    const Color color = Colors.white60;
 
-      for (final face in mesh.faces) {
-        final a = vertices[face.a];
-        final b = vertices[face.b];
-        final c = vertices[face.c];
+    for (final face in shapeData.faces) {
+      final a = vertices[face.a];
+      final b = vertices[face.b];
+      final c = vertices[face.c];
 
-        final normal = Math3d.normal(a, b, c).normalized();
+      final normal = Math3d.normal(a, b, c).normalized();
 
-        if (0 < normal.z) {
-          offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
+      if (0 < normal.z) {
+        offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
 
-          colors.addAll(<Color>[
-            _getColor(normals[face.a], color),
-            _getColor(normals[face.b], color),
-            _getColor(normals[face.c], color),
-          ]);
-        }
+        colors.addAll(<Color>[
+          _getColor(normals[face.a], color),
+          _getColor(normals[face.b], color),
+          _getColor(normals[face.c], color),
+        ]);
       }
     }
     return Triangles(offsets: offsets, colors: colors);
