@@ -40,7 +40,6 @@ class ShapeData {
 
   final List<Vector3> vertices;
   final List<Mesh> meshes;
-
 }
 
 class Mesh {
@@ -52,20 +51,10 @@ class Mesh {
   final List<Face> faces;
 
   final bool isDark;
-
 }
 
 class Face {
-  const Face(
-    this.a,
-    this.b,
-    this.c, {
-    this.aSeam = false,
-    this.bSeam = false,
-    this.cSeam = false,
-  });
+  const Face(this.a, this.b, this.c);
 
   final int a, b, c;
-  final bool aSeam, bSeam, cSeam;
-
 }

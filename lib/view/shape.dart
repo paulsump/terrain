@@ -45,9 +45,9 @@ class Shape extends StatelessWidget {
             offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
 
             colors.addAll(<Color>[
-              _getColor(a, face.aSeam, a, b, c, color),
-              _getColor(b, face.bSeam, a, b, c, color),
-              _getColor(c, face.cSeam, a, b, c, color),
+              _getColor(a, color),
+              _getColor(b, color),
+              _getColor(c, color),
             ]);
           }
         }
@@ -59,19 +59,8 @@ class Shape extends StatelessWidget {
 
 Color _getColor(
   vec_math.Vector3 vertex,
-  bool isFlat,
-  vec_math.Vector3 a,
-  vec_math.Vector3 b,
-  vec_math.Vector3 c,
-  Color color,
-) {
-  var brightness = _calcBrightness(vertex);
-
-  if (isFlat) {
-    final faceBrightness = _calcBrightness(Math3d.normal(a, b, c));
-
-    brightness = lerpDouble(brightness, faceBrightness, 0.3)!;
-  }
+    Color color) {
+  final brightness = _calcBrightness(vertex);
 
   return _calcColor(brightness, color);
 }

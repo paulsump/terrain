@@ -161,9 +161,6 @@ ShapeData _subdivide(ShapeData old) {
     final faces = mesh.isDark ? darkMesh.faces : lightMesh.faces;
 
     for (final face in mesh.faces) {
-      final bool aSeam = face.aSeam;
-      final bool bSeam = face.bSeam;
-      final bool cSeam = face.cSeam;
 
       final a = vertices[face.a];
       final b = vertices[face.b];
@@ -173,18 +170,14 @@ ShapeData _subdivide(ShapeData old) {
       final q = (b + c) / 2;
       final r = (c + a) / 2;
 
-      final bool i2 = face.aSeam && face.bSeam;
-      final bool j2 = face.bSeam && face.cSeam;
-      final bool k2 = face.cSeam && face.aSeam;
-
       final i = _getOrAdd(p, vertices);
       final j = _getOrAdd(q, vertices);
       final k = _getOrAdd(r, vertices);
 
-      faces.add(Face(face.a, i, k, aSeam: aSeam, bSeam: i2, cSeam: k2));
-      faces.add(Face(i, face.b, j, aSeam: i2, bSeam: bSeam, cSeam: j2));
-      faces.add(Face(j, face.c, k, aSeam: j2, bSeam: cSeam, cSeam: k2));
-      faces.add(Face(k, i, j, aSeam: k2, bSeam: i2, cSeam: j2));
+      faces.add(Face(face.a, i, k));
+      faces.add(Face(i, face.b, j));
+      faces.add(Face(j, face.c, k));
+      faces.add(Face(k, i, j));
     }
   }
 
@@ -206,7 +199,7 @@ const root5 = 2.23606797749979;
 // https://www.youtube.com/watch?v=xMh_LtlOs_4&ab_channel=MechanicalMachineDesign
 
 const double c1 = (root5 - 1) / 4;
-const double cSeam = (root5 + 1) / 4;
+const double c2 = (root5 + 1) / 4;
 
 const double s1 = 0.9510565162951535; //sqrt(10+2*root5)/4;
 const double s2 = 0.5877852522924731; //sqrt(10-2*root5)/4;
@@ -218,16 +211,16 @@ final _icosahedron = ShapeData(vertices: <Vector3>[
   // top pentagon from top anticlockwise
   Vector3(0, 1, 0.5),
   Vector3(-s1, c1, 0.5),
-  Vector3(-s2, -cSeam, 0.5),
-  Vector3(s2, -cSeam, 0.5),
+  Vector3(-s2, -c2, 0.5),
+  Vector3(s2, -c2, 0.5),
   Vector3(s1, c1, 0.5),
 
   // bottom pentagon from top anticlockwise
-  Vector3(-s2, cSeam, -0.5),
+  Vector3(-s2, c2, -0.5),
   Vector3(-s1, -c1, -0.5),
   Vector3(0, -1, -0.5),
   Vector3(s1, -c1, -0.5),
-  Vector3(s2, cSeam, -0.5),
+  Vector3(s2, c2, -0.5),
 
   // south pole
   Vector3(0, 0, -root5 / 2),
