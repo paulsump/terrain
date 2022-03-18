@@ -35,16 +35,11 @@ class VertexNotifier extends ChangeNotifier {
       vertices[i] = transform.transformed3(shapeData.vertices[i], vertices[i]);
     }
 
-    for (int i = 0; i < shapeData.seamVertices.length; ++i) {
-      seamVertices[i] =
-          transform.transformed3(shapeData.seamVertices[i], seamVertices[i]);
-    }
 
     notifyListeners();
   }
 
-  void init(List<Vector3> list, List<Vector3> list2) {
+  void init(List<Vector3> list) {
     vertices = list;
-    seamVertices = list2;
   }
 }

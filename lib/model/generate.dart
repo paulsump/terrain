@@ -18,28 +18,19 @@ ShapeData generateShapeData() {
   shapeData = _subdivide(shapeData);
 
   _normalize(shapeData.vertices);
-  _normalize(shapeData.seamVertices);
-
-  for (final vertex in shapeData.seamVertices) {
-    vertex.scale(_seamDepth);
-  }
   return shapeData;
 }
 
-const _seamDepth = 0.985;
 const double _patchScale = 0.85;
 
 /// for each vector coming out from a vertex
 /// go a third of the way along and add that ver (do face the same time)
 ShapeData _subdivideFrequency3(ShapeData old) {
   final vertices = <Vector3>[...old.vertices];
-  final seamVertices = <Vector3>[];
 
   final darkMeshes = <Mesh>[];
   final lightMeshes = <Mesh>[];
 
-  final darkSeamMeshes = <Mesh>[];
-  final lightSeamMeshes = <Mesh>[];
 
   for (final face in old.meshes.first.faces) {
     // face corners
@@ -76,32 +67,6 @@ ShapeData _subdivideFrequency3(ShapeData old) {
     lightMesh.add(Face(r1, s, q2));
     lightMesh.add(Face(r2, s, r1));
 
-    // copy vertices for the seam
-    final int p1_ = _getOrAdd(vertices[p1], seamVertices);
-    final int p2_ = _getOrAdd(vertices[p2], seamVertices);
-    final int q1_ = _getOrAdd(vertices[q1], seamVertices);
-    final int q2_ = _getOrAdd(vertices[q2], seamVertices);
-    final int r1_ = _getOrAdd(vertices[r1], seamVertices);
-    final int r2_ = _getOrAdd(vertices[r2], seamVertices);
-
-    final lightSeam = <Face>[];
-    lightSeamMeshes.add(Mesh(faces: lightSeam, isDark: false));
-
-    // next to dark seams
-    lightSeam.add(Face(r2, r2_, p1, bSeam: true));
-    lightSeam.add(Face(r2_, p1_, p1, aSeam: true, bSeam: true));
-    lightSeam.add(Face(p2, p2_, q1, bSeam: true));
-    lightSeam.add(Face(p2_, q1_, q1, aSeam: true, bSeam: true));
-    lightSeam.add(Face(r1, q2, q2_, cSeam: true));
-    lightSeam.add(Face(r1, q2_, r1_, bSeam: true, cSeam: true));
-
-    // next to light seams from another 9 triangles
-    lightSeam.add(Face(p1, p1_, p2, bSeam: true));
-    lightSeam.add(Face(p2, p1_, p2_, bSeam: true, cSeam: true));
-    lightSeam.add(Face(q2, q1, q1_, cSeam: true));
-    lightSeam.add(Face(q2, q1_, q2_, bSeam: true, cSeam: true));
-    lightSeam.add(Face(r2, r1, r1_, cSeam: true));
-    lightSeam.add(Face(r2, r1_, r2_, bSeam: true, cSeam: true));
 
     final darkMesh = <Face>[];
     darkMeshes.add(Mesh(faces: darkMesh, isDark: true));
@@ -119,15 +84,6 @@ ShapeData _subdivideFrequency3(ShapeData old) {
     darkMesh.add(Face(face.b, q1, p2));
     darkMesh.add(Face(face.c, r1, q2));
 
-    final darkSeam = <Face>[];
-    darkSeamMeshes.add(Mesh(faces: darkSeam, isDark: true));
-
-    darkSeam.add(Face(r2, p1, r2_, cSeam: true));
-    darkSeam.add(Face(r2_, p1, p1_, aSeam: true, cSeam: true));
-    darkSeam.add(Face(p2, q1, p2_, cSeam: true));
-    darkSeam.add(Face(p2_, q1, q1_, aSeam: true, cSeam: true));
-    darkSeam.add(Face(r1, q2_, q2, bSeam: true));
-    darkSeam.add(Face(r1, r1_, q2_, cSeam: true, bSeam: true));
   }
 
   // scale the light hexagons
@@ -173,12 +129,9 @@ ShapeData _subdivideFrequency3(ShapeData old) {
 
   return ShapeData(
     vertices: vertices,
-    seamVertices: seamVertices,
     meshes: <Mesh>[
       ...darkMeshes,
       ...lightMeshes,
-      ...lightSeamMeshes,
-      ...darkSeamMeshes
     ],
   );
 }
@@ -195,7 +148,6 @@ int _getOrAdd(Vector3 vector3, List<Vector3> vertices) {
 /// See triangle_subdivide.png
 ShapeData _subdivide(ShapeData old) {
   final vertices = <Vector3>[...old.vertices];
-  final seamVertices = <Vector3>[...old.seamVertices];
 
   final dark = <Face>[];
   final light = <Face>[];
@@ -213,9 +165,9 @@ ShapeData _subdivide(ShapeData old) {
       final bool bSeam = face.bSeam;
       final bool cSeam = face.cSeam;
 
-      final a = aSeam ? seamVertices[face.a] : vertices[face.a];
-      final b = bSeam ? seamVertices[face.b] : vertices[face.b];
-      final c = cSeam ? seamVertices[face.c] : vertices[face.c];
+      final a = vertices[face.a];
+      final b = vertices[face.b];
+      final c = vertices[face.c];
 
       final p = (a + b) / 2;
       final q = (b + c) / 2;
@@ -225,9 +177,9 @@ ShapeData _subdivide(ShapeData old) {
       final bool j2 = face.bSeam && face.cSeam;
       final bool k2 = face.cSeam && face.aSeam;
 
-      final i = _getOrAdd(p, i2 ? seamVertices : vertices);
-      final j = _getOrAdd(q, j2 ? seamVertices : vertices);
-      final k = _getOrAdd(r, k2 ? seamVertices : vertices);
+      final i = _getOrAdd(p, vertices);
+      final j = _getOrAdd(q, vertices);
+      final k = _getOrAdd(r, vertices);
 
       faces.add(Face(face.a, i, k, aSeam: aSeam, bSeam: i2, cSeam: k2));
       faces.add(Face(i, face.b, j, aSeam: i2, bSeam: bSeam, cSeam: j2));
@@ -238,9 +190,7 @@ ShapeData _subdivide(ShapeData old) {
 
   return ShapeData(
     vertices: vertices,
-    seamVertices: seamVertices,
-    meshes: meshes,
-  );
+      meshes: meshes);
 }
 
 void _normalize(List<Vector3> vertices) {
@@ -281,7 +231,7 @@ final _icosahedron = ShapeData(vertices: <Vector3>[
 
   // south pole
   Vector3(0, 0, -root5 / 2),
-], seamVertices: <Vector3>[], meshes: <Mesh>[
+], meshes: <Mesh>[
   const Mesh(
     faces: [
       // top
@@ -322,7 +272,6 @@ final _triangle = ShapeData(
     Vector3(1, 0, 0),
     Vector3(0, 1, 0),
   ],
-  seamVertices: <Vector3>[],
   meshes: <Mesh>[
     const Mesh(
       faces: [Face(0, 1, 2)],
