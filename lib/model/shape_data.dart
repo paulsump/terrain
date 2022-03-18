@@ -19,15 +19,15 @@ ShapeNotifier getShapeNotifier(BuildContext context, {required bool listen}) =>
 /// Access to the [ShapeData].
 /// Generated in generate.dart, drawn by [Shape].
 class ShapeNotifier extends ChangeNotifier {
-  late ShapeData _shapeData;
+  // late ShapeData _shapeData;
+  //
+  // ShapeData get shapeData => _shapeData;
 
-  ShapeData get shapeData => _shapeData;
-
-  //TODO remove HACK for quick hot reaload
-  // ShapeData get shapeData => generateShapeData();
+  //TODO remove HACK for quick hot reload
+  ShapeData get shapeData => generateShapeData();
 
   void init(ShapeData shapeData_) {
-    _shapeData = shapeData_;
+    // _shapeData = shapeData_;
   }
 }
 

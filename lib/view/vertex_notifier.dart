@@ -22,7 +22,6 @@ class VertexNotifier extends ChangeNotifier {
   Matrix4 _transform = Matrix4.identity();
 
   late List<Vector3> vertices;
-  late List<Vector3> seamVertices;
 
   Matrix4 get transform => _transform;
 
