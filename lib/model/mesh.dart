@@ -44,4 +44,10 @@ class Mesh {
 
   final List<Vector3> vertices;
   final List<Vector3> normals;
+
+  @override
+  String toString() {
+    return '$vertices';
+    // return '$vertices\n$normals';
+  }
 }

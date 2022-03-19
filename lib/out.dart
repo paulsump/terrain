@@ -5,19 +5,24 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+const noWarn = log;
+
+// const _out = log;
+final _out = debugPrint; // for tests
 /// log any type of object, using toString()
 /// or special case for a couple of types like List<Offset>
+
 void out(Object object) {
   if (object is List<Offset>) {
-    log('n = ${object.length}\nconst [');
+    _out('n = ${object.length}\nconst [');
     for (Offset offset in object) {
-      log('Offset(${offset.dx},${offset.dy}),');
+      _out('Offset(${offset.dx},${offset.dy}),');
     }
-    log(']');
+    _out(']');
   } else if (object is Offset) {
-    log('${object.dx},${object.dy}');
+    _out('${object.dx},${object.dy}');
   } else {
-    log(object.toString());
+    _out(object.toString());
   }
 }
 
