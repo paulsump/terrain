@@ -9,8 +9,8 @@ import 'package:terrain/out.dart';
 const noWarn = out;
 
 void main() {
-  group('pentagon', () {
-    test('top', () {
+  group('generateTriangleStripMesh', () {
+    test('n = 4', () {
       final mesh = generateTriangleStripMesh(4);
       out(mesh);
       // expect(normal, equals(expected));
