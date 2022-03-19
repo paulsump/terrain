@@ -30,5 +30,4 @@ get _triangleStrip => Mesh(
         Vector3(0, 0, 1),
         Vector3(0, 0, 1),
       ],
-      faces: <Face>[const Face(0, 1, 2)],
     );

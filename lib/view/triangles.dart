@@ -12,12 +12,10 @@ class Triangles extends StatelessWidget {
     Key? key,
     required this.offsets,
     required this.colors,
-    required this.indices,
   }) : super(key: key);
 
   final List<Offset> offsets;
   final List<Color> colors;
-  final List<int> indices;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,6 @@ class Triangles extends StatelessWidget {
           VertexMode.triangleStrip,
           offsets,
           colors: colors,
-          // indices: indices,
         ),
       ),
     );
