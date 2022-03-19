@@ -31,6 +31,13 @@ class Shape extends StatelessWidget {
     final colors = <Color>[];
 
     const Color color = Colors.white60;
+    for (int i = 0; i < vertices.length; ++i) {
+      offsets.add(_flipY(vertices[i]));
+
+      colors.add(_getColor(normals[i], color));
+    }
+
+    final indices = <int>[];
 
     for (final face in mesh.faces) {
       final a = vertices[face.a];
@@ -39,17 +46,14 @@ class Shape extends StatelessWidget {
 
       final normal = Math3d.normal(a, b, c).normalized();
 
-      if (0 < normal.z) {
-        offsets.addAll(<Offset>[_flipY(a), _flipY(b), _flipY(c)]);
-
-        colors.addAll(<Color>[
-          _getColor(normals[face.a], color),
-          _getColor(normals[face.b], color),
-          _getColor(normals[face.c], color),
-        ]);
+      if (true) {
+        // if (0 < normal.z) {
+        indices.add(face.a);
+        indices.add(face.b);
+        indices.add(face.c);
       }
     }
-    return Triangles(offsets: offsets, colors: colors);
+    return Triangles(offsets: offsets, colors: colors, indices: indices);
   }
 }
 

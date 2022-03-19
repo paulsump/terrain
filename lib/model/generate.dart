@@ -14,7 +14,6 @@ Mesh generateMesh() {
   Mesh mesh = _triangle;
 
   mesh = _subdivide(mesh);
-
   return mesh;
 }
 
