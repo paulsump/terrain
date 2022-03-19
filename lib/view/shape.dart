@@ -39,9 +39,9 @@ class Shape extends StatelessWidget {
     final indices = <int>[];
 
     for (final face in mesh.faces) {
-      final a = vertices[face.a];
-      final b = vertices[face.b];
-      final c = vertices[face.c];
+      // final a = vertices[face.a];
+      // final b = vertices[face.b];
+      // final c = vertices[face.c];
 
       // final normal = Math3d.normal(a, b, c).normalized();
 

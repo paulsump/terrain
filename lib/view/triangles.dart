@@ -24,10 +24,10 @@ class Triangles extends StatelessWidget {
     return CustomPaint(
       painter: _Painter(
         Vertices(
-          VertexMode.triangles,
+          VertexMode.triangleStrip,
           offsets,
           colors: colors,
-          indices: indices,
+          // indices: indices,
         ),
       ),
     );
