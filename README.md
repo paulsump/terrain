@@ -17,11 +17,12 @@ might be tempted), just a simple mesh renderer.
 
 ### TODO
 
-Draw a grid.
+Draw a grid. VertexMode.triangleStrip. Rectangular for simplicity. Small undulations, so no need for
+subdivide.
 
-Subdivide the heights too. See if using an average of local vertices is enough rather than a spline.
+### Ideas
 
-Use vertex index list No duplicate vertices.
+Animate the heights of the 'terrain' so that it ripples like water?
 
 By animating the light rather than the transform, see if there's a way of making Triangles more
 const - by not changing there vertices, just the colors that they are painted.

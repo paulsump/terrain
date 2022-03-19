@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:terrain/model/math_3d.dart';
 import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/triangles.dart';
@@ -44,7 +43,7 @@ class Shape extends StatelessWidget {
       final b = vertices[face.b];
       final c = vertices[face.c];
 
-      final normal = Math3d.normal(a, b, c).normalized();
+      // final normal = Math3d.normal(a, b, c).normalized();
 
       if (true) {
         // if (0 < normal.z) {
