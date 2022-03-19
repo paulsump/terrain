@@ -11,8 +11,6 @@ import 'package:terrain/out.dart';
 import 'package:terrain/view/hue.dart';
 import 'package:terrain/view/main_page.dart';
 import 'package:terrain/view/screen_adjust.dart';
-import 'package:terrain/view/vertex_notifier.dart';
-import 'package:vector_math/vector_math_64.dart';
 
 /// prevent 'organise imports' from removing imports
 /// when temporarily commenting out.
@@ -32,7 +30,6 @@ class TheApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => PanZoomNotifier()),
         ChangeNotifierProvider(create: (_) => ShapeNotifier()),
-        ChangeNotifierProvider(create: (_) => VertexNotifier()),
       ],
       child: MaterialApp(
         theme: _buildThemeData(context),
@@ -53,16 +50,6 @@ class TheApp extends StatelessWidget {
                 final mesh = generateMesh();
                 shapeNotifier.init(mesh);
 
-                final vertexNotifier =
-                    getVertexNotifier(context, listen: false);
-
-                vertexNotifier.init(
-                    mesh.vertices
-                        .map((vertex) => Vector3.copy(vertex))
-                        .toList(),
-                    mesh.normals
-                        .map((normal) => Vector3.copy(normal))
-                        .toList());
               }
               // final
               return WillPopScope(

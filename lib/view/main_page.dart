@@ -5,7 +5,8 @@ import 'package:terrain/gestures/gesturer.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/horizon.dart';
 import 'package:terrain/view/hue.dart';
-import 'package:terrain/view/rotating_shape.dart';
+import 'package:terrain/view/shape.dart';
+import 'package:terrain/view/unit_to_screen.dart';
 
 const noWarn = [out];
 
@@ -23,7 +24,7 @@ class MainPage extends StatelessWidget {
           child: Stack(children: const [
             Horizon(),
             Gesturer(),
-            RotatingShape(),
+            UnitToScreen(child: Shape()),
           ]),
         ),
       ),

@@ -1,9 +1,9 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/triangles.dart';
-import 'package:terrain/view/vertex_notifier.dart';
 import 'package:vector_math/vector_math_64.dart' as vec_math;
 
 import 'triangles.dart';
@@ -16,10 +16,10 @@ class Shape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vertexNotifier = getVertexNotifier(context, listen: true);
+    final mesh = getMesh(context, listen: true);
 
-    final vertices = vertexNotifier.vertices;
-    final normals = vertexNotifier.normals;
+    final vertices = mesh.vertices;
+    final normals = mesh.normals;
 
     final offsets = <Offset>[];
     final colors = <Color>[];
