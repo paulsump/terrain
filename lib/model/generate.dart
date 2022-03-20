@@ -18,6 +18,9 @@ final noWarn = [
 Mesh generateMesh() {
   final generator = MeshGenerator(222);
 
+  generator.setHeights();
+  generator.calcVertexNormals(generator.calcFaceNormals());
+
   final mesh = generator.getMesh();
   _rotateX(75, mesh);
 
@@ -29,9 +32,6 @@ class MeshGenerator {
   /// n = num quads in both x and y
   MeshGenerator(int n) {
     _calcVerticesAndIndices(n);
-
-    _setHeights();
-    _calcVertexNormals(calcFaceNormals());
   }
 
   final vertices = <Vector3>[];
@@ -39,7 +39,7 @@ class MeshGenerator {
 
   final indices = <int>[];
 
-  void _setHeights() {
+  void setHeights() {
     for (final vertex in vertices) {
       vertex.z = 0.05 * (sin(2 * pi * vertex.x) + sin(2 * pi * vertex.y));
     }
@@ -57,8 +57,29 @@ class MeshGenerator {
     return faceNormals;
   }
 
-  void _calcVertexNormals(List<Vector3> faceNormals) {
-    //TODO
+  void calcVertexNormals(List<Vector3> faceNormals) {
+    for (int i = 0; i < vertices.length; ++i) {
+      double count = 0;
+
+      var normal = Vector3.zero();
+      var s = '[';
+
+      for (int f = -4; f < 4; ++f) {
+        final faceIndex = f + i ~/ 3;
+
+        if (0 <= faceIndex && faceIndex < faceNormals.length) {
+          count += 1;
+
+          s += ' $f,${i ~/ 3}';
+          normal += faceNormals[faceIndex];
+        } else {
+          // s += '_';
+        }
+      }
+
+      // out('$i, ${count.toInt()}' + s);
+      normals.add(normal / count);
+    }
   }
 
   /// Vertical strips of two triangles making a square
@@ -101,10 +122,7 @@ class MeshGenerator {
   Mesh getMesh() {
     return Mesh(
       vertices: vertices,
-      normals: List<Vector3>.generate(
-        vertices.length,
-        (i) => Vector3(0, 0, 1),
-      ),
+      normals: normals,
       indices: indices,
     );
   }

@@ -66,7 +66,7 @@ void main() {
     });
   });
 
-  group('calcFaceNormals', () {
+  group('Normals n = 2', () {
     final meshGenerator = MeshGenerator(2);
 
     // add a little peak at the middle vertex
@@ -74,21 +74,34 @@ void main() {
 
     final faceNormals = meshGenerator.calcFaceNormals();
 
-    test('faceNormals n = 2', () {
+    test('faceNormals', () {
       final expected = [
-        Vector3(-3.061616997868383e-18, -3.061616997868383e-18, 0.25),
+        Vector3(0.0, 0.0, 0.25),
         Vector3(-0.5, -0.5, 0.25),
         Vector3(-0.5, 0.0, 0.25),
-        Vector3(-3.061616997868383e-18, 0.5, 0.25),
-        Vector3(9.18485099360515e-18, -0.5, 0.25),
+        Vector3(0.0, 0.5, 0.25),
+        Vector3(0.0, -0.5, 0.25),
         Vector3(0.5, 0.0, 0.25),
         Vector3(0.5, 0.5, 0.25),
-        Vector3(9.18485099360515e-18, 9.18485099360515e-18, 0.25),
+        Vector3(0.0, 0.0, 0.25),
       ];
 
       for (int i = 0; i < faceNormals.length; ++i) {
         expect(faceNormals[i], equals(expected[i]));
       }
+    });
+
+    test('vertexNormals', () {
+      meshGenerator.calcVertexNormals(faceNormals);
+
+      final expected = [];
+
+      final normals = meshGenerator.normals;
+      out(normals);
+
+      // for (int i = 0; i < normals.length; ++i) {
+      //   expect(normals[i], equals(expected[i]));
+      // }
     });
   });
 }
