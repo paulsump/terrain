@@ -61,7 +61,8 @@ class MeshGenerator {
     //TODO
   }
 
-  // see sketches/grid.png
+  /// Vertical strips of two triangles making a square
+  /// see sketches/grid.png
   void _calcVerticesAndIndices(int n) {
     for (int x = 0; x <= n; ++x) {
       for (int y = 0; y <= n; ++y) {

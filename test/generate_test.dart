@@ -69,11 +69,10 @@ void main() {
   group('calcFaceNormals', () {
     final meshGenerator = MeshGenerator(2);
 
-    final middleVertex = meshGenerator.vertices[4];
-    middleVertex.z = 1;
+    // add a little peak at the middle vertex
+    meshGenerator.vertices[4].z = 1;
 
     final faceNormals = meshGenerator.calcFaceNormals();
-    out(faceNormals);
 
     test('faceNormals n = 2', () {
       final expected = [
