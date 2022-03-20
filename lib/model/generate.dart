@@ -17,6 +17,12 @@ Mesh generateMesh() {
   return mesh;
 }
 
+void _perturbe(Mesh mesh) {}
+
+void _calcFaceNormals(Mesh mesh) {}
+
+void _calcVertexNormals(Mesh mesh) {}
+
 // n = num quads
 Mesh generateTriangleStripMesh(int n) {
   final vertices = <Vector3>[];
@@ -36,8 +42,8 @@ Mesh generateTriangleStripMesh(int n) {
         final leftDiagonal = Y + 1 + X * N;
         final rightDiagonal = X * N + N + Y;
 
-        indices.add(leftDiagonal);
         indices.add(rightDiagonal);
+        indices.add(leftDiagonal);
         indices.add(X * N + Y);
 
         indices.add(leftDiagonal);

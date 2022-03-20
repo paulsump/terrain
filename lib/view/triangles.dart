@@ -38,8 +38,8 @@ class Triangles extends StatelessWidget {
         Vertices(
           VertexMode.triangleStrip,
           offsets,
-          // colors: _debugColor(offsets.length),
-          colors: colors,
+          colors: _debugColor(offsets.length),
+          // colors: colors,
           indices: indices,
         ),
       ),
