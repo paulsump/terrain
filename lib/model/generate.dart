@@ -11,17 +11,23 @@ final noWarn = [out, _rotateX];
 /// See README.md
 /// This function is the interface to this file
 Mesh generateMesh() {
-  final mesh = generateTriangleStripMesh(1);
+  final mesh = generateTriangleStripMesh(2);
   // _rotateX(75, mesh);
 
   return mesh;
 }
 
+// n = num quads
 Mesh generateTriangleStripMesh(int n) {
   final vertices = <Vector3>[];
 
   // final indices = <int>[1, 2, 0, 1, 2, 3];
-  // final indices = <int>[1, 3, 0, 1, 3, 4];
+  // final indices = <int>[
+  //   1, 3, 0, 1, 3, 4,
+  //   2, 4, 1, 2, 4, 5,
+  //   4, 6, 3, 4, 6, 7,
+  //   5, 7, 4, 5, 7, 8,
+  // ];
   final indices = <int>[];
   final step = 1 / n;
 
@@ -32,12 +38,15 @@ Mesh generateTriangleStripMesh(int n) {
 
       vertices.add(Vector3(x, y, 0));
       if (X != n && Y != n) {
-        indices.add(Y + 1);
-        indices.add(X + 1 + n + Y);
-        indices.add(X + Y);
-        indices.add(Y + 1);
-        indices.add(X + 1 + n + Y);
-        indices.add(X + 2 + n + Y);
+        final N = n + 1;
+        final leftDiagonal = Y + 1 + X * N;
+        final rightDiagonal = X * N + N + Y;
+        indices.add(leftDiagonal);
+        indices.add(rightDiagonal);
+        indices.add(X * N + Y);
+        indices.add(leftDiagonal);
+        indices.add(rightDiagonal);
+        indices.add(X * N + 1 + N + Y);
       }
     }
   }

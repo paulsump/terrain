@@ -51,6 +51,23 @@ class Mesh {
   String toString() {
     // return '$vertices';
     // return '$indices';
+    var s = '';
+    int i = 0;
+    while (i < indices.length) {
+      s += '${indices[i]}, ';
+      i += 1;
+      s += '${indices[i]}, ';
+      i += 1;
+      s += '${indices[i]}, ';
+      i += 1;
+      s += '${indices[i]}, ';
+      i += 1;
+      s += '${indices[i]}, ';
+      i += 1;
+      s += '${indices[i]},\n';
+      i += 1;
+    }
+    return s;
     return '$vertices\n$indices';
     // return '$vertices\n$normals';
   }
