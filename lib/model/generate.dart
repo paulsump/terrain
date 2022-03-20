@@ -14,15 +14,26 @@ final noWarn = [
 /// See README.md
 /// This function is the interface to this file
 Mesh generateMesh() {
-  final builder = MeshBuilder(3);
-  final mesh = builder.getMesh();
+  final generator = MeshGenerator(2);
 
+  final mesh = generator.getMesh();
   _rotateX(75, mesh);
+
   return mesh;
 }
 
-///generateTriangleStripMesh
-class MeshBuilder {
+/// generate a triangle strip mesh
+class MeshGenerator {
+  /// n = num quads in both x and y
+  MeshGenerator(int n) {
+    _calcVerticesAndIndices(n);
+
+    _setHeights();
+
+    _calcFaceNormals();
+    _calcVertexNormals();
+  }
+
   final vertices = <Vector3>[];
 
   final indices = <int>[];
@@ -32,16 +43,6 @@ class MeshBuilder {
   void _calcFaceNormals() {}
 
   void _calcVertexNormals() {}
-
-// n = num quads
-  MeshBuilder(int n) {
-    _calcVerticesAndIndices(n);
-
-    _setHeights();
-
-    _calcFaceNormals();
-    _calcVertexNormals();
-  }
 
   void _calcVerticesAndIndices(int n) {
     for (int x = 0; x <= n; ++x) {
