@@ -1,7 +1,9 @@
 // © 2022, Paul Sumpner <sumpner@hotmail.com>
 
 import 'dart:core';
+import 'dart:math';
 
+import 'package:terrain/model/math_3d.dart';
 import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -14,7 +16,7 @@ final noWarn = [
 /// See README.md
 /// This function is the interface to this file
 Mesh generateMesh() {
-  final generator = MeshGenerator(2);
+  final generator = MeshGenerator(222);
 
   final mesh = generator.getMesh();
   _rotateX(75, mesh);
@@ -29,20 +31,35 @@ class MeshGenerator {
     _calcVerticesAndIndices(n);
 
     _setHeights();
-
-    _calcFaceNormals();
-    _calcVertexNormals();
+    _calcVertexNormals(calcFaceNormals());
   }
 
   final vertices = <Vector3>[];
+  final normals = <Vector3>[];
 
   final indices = <int>[];
 
-  void _setHeights() {}
+  void _setHeights() {
+    for (final vertex in vertices) {
+      vertex.z = 0.05 * (sin(2 * pi * vertex.x) + sin(2 * pi * vertex.y));
+    }
+  }
 
-  void _calcFaceNormals() {}
+  List<Vector3> calcFaceNormals() {
+    final faceNormals = <Vector3>[];
 
-  void _calcVertexNormals() {}
+    for (int i = 0; i < indices.length; i += 3) {
+      v(index) => vertices[indices[index]];
+
+      faceNormals.add(Math3d.normal(v(i), v(i + 1), v(i + 2)));
+    }
+
+    return faceNormals;
+  }
+
+  void _calcVertexNormals(List<Vector3> faceNormals) {
+    //TODO
+  }
 
   void _calcVerticesAndIndices(int n) {
     for (int x = 0; x <= n; ++x) {

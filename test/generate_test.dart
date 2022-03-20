@@ -5,11 +5,12 @@ import 'dart:core';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:terrain/model/generate.dart';
 import 'package:terrain/out.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 const noWarn = out;
 
 void main() {
-  group('MeshGenerator Constructor', () {
+  group('Constructor', () {
     final meshGenerator = MeshGenerator(2);
 
     test('vertices n = 2', () {
@@ -61,6 +62,33 @@ void main() {
 
       for (int i = 0; i < meshGenerator.indices.length; ++i) {
         expect(meshGenerator.indices[i], equals(expected[i]));
+      }
+    });
+  });
+
+  group('calcFaceNormals', () {
+    final meshGenerator = MeshGenerator(2);
+
+    final middleVertex = meshGenerator.vertices[4];
+    middleVertex.z = 1;
+
+    final faceNormals = meshGenerator.calcFaceNormals();
+    out(faceNormals);
+
+    test('faceNormals n = 2', () {
+      final expected = [
+        Vector3(-3.061616997868383e-18, -3.061616997868383e-18, 0.25),
+        Vector3(-0.5, -0.5, 0.25),
+        Vector3(-0.5, 0.0, 0.25),
+        Vector3(-3.061616997868383e-18, 0.5, 0.25),
+        Vector3(9.18485099360515e-18, -0.5, 0.25),
+        Vector3(0.5, 0.0, 0.25),
+        Vector3(0.5, 0.5, 0.25),
+        Vector3(9.18485099360515e-18, 9.18485099360515e-18, 0.25),
+      ];
+
+      for (int i = 0; i < faceNormals.length; ++i) {
+        expect(faceNormals[i], equals(expected[i]));
       }
     });
   });
