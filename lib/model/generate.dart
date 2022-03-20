@@ -12,7 +12,7 @@ final noWarn = [out, _rotateX];
 /// This function is the interface to this file
 Mesh generateMesh() {
   final mesh = generateTriangleStripMesh(3);
-  // _rotateX(75, mesh);
+  _rotateX(75, mesh);
 
   return mesh;
 }
@@ -32,11 +32,14 @@ Mesh generateTriangleStripMesh(int n) {
       vertices.add(Vector3(x, y, 0));
       if (X != n && Y != n) {
         final N = n + 1;
+
         final leftDiagonal = Y + 1 + X * N;
         final rightDiagonal = X * N + N + Y;
+
         indices.add(leftDiagonal);
         indices.add(rightDiagonal);
         indices.add(X * N + Y);
+
         indices.add(leftDiagonal);
         indices.add(rightDiagonal);
         indices.add(X * N + 1 + N + Y);
@@ -46,7 +49,10 @@ Mesh generateTriangleStripMesh(int n) {
 
   return Mesh(
     vertices: vertices,
-    normals: List<Vector3>.generate(vertices.length, (i) => Vector3(0, 0, 1)),
+    normals: List<Vector3>.generate(
+      vertices.length,
+      (i) => Vector3(0, 0, 1),
+    ),
     indices: indices,
   );
 }
@@ -57,10 +63,6 @@ void _rotateX(double degrees, Mesh mesh) {
   final vertices = mesh.vertices;
   for (int i = 0; i < vertices.length; ++i) {
     transform.transform3(vertices[i]);
-  }
-
-  final normals = mesh.normals;
-  for (int i = 0; i < normals.length; ++i) {
-    transform.transform3(normals[i]);
+    transform.transform3(mesh.normals[i]);
   }
 }

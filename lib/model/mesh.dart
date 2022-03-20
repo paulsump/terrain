@@ -68,7 +68,7 @@ class Mesh {
       i += 1;
     }
     return s;
-    return '$vertices\n$indices';
+    // return '$vertices\n$indices';
     // return '$vertices\n$normals';
   }
 }

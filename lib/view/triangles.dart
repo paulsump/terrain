@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:terrain/out.dart';
 
-const noWarn = out;
+const noWarn = [out, _debugColor];
 
 _debugColor(n) {
   final colors = <Color>[];
@@ -38,8 +38,8 @@ class Triangles extends StatelessWidget {
         Vertices(
           VertexMode.triangleStrip,
           offsets,
-          colors: _debugColor(offsets.length),
-          // colors:colors,
+          // colors: _debugColor(offsets.length),
+          colors: colors,
           indices: indices,
         ),
       ),
