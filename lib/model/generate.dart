@@ -69,16 +69,16 @@ class MeshGenerator {
         if (x != n && y != n) {
           final N = n + 1;
 
-          final leftDiagonal = y + 1 + x * N;
-          final rightDiagonal = x * N + N + y;
+          final leftDiagonal = N * x + y + 1;
+          final rightDiagonal = N * (x + 1) + y;
 
           indices.add(rightDiagonal);
           indices.add(leftDiagonal);
-          indices.add(x * N + y);
+          indices.add(N * x + y);
 
           indices.add(leftDiagonal);
           indices.add(rightDiagonal);
-          indices.add(x * N + 1 + N + y);
+          indices.add(N * (x + 1) + y + 1);
         }
       }
     }
