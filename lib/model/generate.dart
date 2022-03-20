@@ -27,33 +27,40 @@ class MeshBuilder {
 
   final indices = <int>[];
 
-  // void _perturbHeights() {}
-  // void _calcFaceNormals() {}
-  // void _calcVertexNormals() {}
+  void _setHeights() {}
+
+  void _calcFaceNormals() {}
+
+  void _calcVertexNormals() {}
 
 // n = num quads
   MeshBuilder(int n) {
-    final step = 1 / n;
+    _calcVerticesAndIndices(n);
 
-    for (int X = 0; X <= n; ++X) {
-      for (int Y = 0; Y <= n; ++Y) {
-        final x = X * step;
-        final y = Y * step;
+    _setHeights();
 
-        vertices.add(Vector3(x, y, 0));
-        if (X != n && Y != n) {
+    _calcFaceNormals();
+    _calcVertexNormals();
+  }
+
+  void _calcVerticesAndIndices(int n) {
+    for (int x = 0; x <= n; ++x) {
+      for (int y = 0; y <= n; ++y) {
+        vertices.add(Vector3(x / n, y / n, 0));
+
+        if (x != n && y != n) {
           final N = n + 1;
 
-          final leftDiagonal = Y + 1 + X * N;
-          final rightDiagonal = X * N + N + Y;
+          final leftDiagonal = y + 1 + x * N;
+          final rightDiagonal = x * N + N + y;
 
           indices.add(rightDiagonal);
           indices.add(leftDiagonal);
-          indices.add(X * N + Y);
+          indices.add(x * N + y);
 
           indices.add(leftDiagonal);
           indices.add(rightDiagonal);
-          indices.add(X * N + 1 + N + Y);
+          indices.add(x * N + 1 + N + y);
         }
       }
     }
