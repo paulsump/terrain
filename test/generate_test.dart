@@ -10,9 +10,9 @@ const noWarn = out;
 
 void main() {
   group('MeshGenerator Constructor', () {
-    test('n = 2', () {
-      final meshGenerator = MeshGenerator(2);
+    final meshGenerator = MeshGenerator(2);
 
+    test('vertices n = 2', () {
       final expected = [
         [0.0, 0.0],
         [0.0, 0.5],
@@ -24,11 +24,44 @@ void main() {
         [1.0, 0.5],
         [1.0, 1.0]
       ];
+
       for (int i = 0; i < meshGenerator.vertices.length; ++i) {
         expect(meshGenerator.vertices[i].x, equals(expected[i][0]));
         expect(meshGenerator.vertices[i].y, equals(expected[i][1]));
       }
-      // [3, 1, 0, 1, 3, 4, 4, 2, 1, 2, 4, 5, 6, 4, 3, 4, 6, 7, 7, 5, 4, 5, 7, 8]
+    });
+
+    test('indices n = 2', () {
+      final expected = [
+        3,
+        1,
+        0,
+        1,
+        3,
+        4,
+        4,
+        2,
+        1,
+        2,
+        4,
+        5,
+        6,
+        4,
+        3,
+        4,
+        6,
+        7,
+        7,
+        5,
+        4,
+        5,
+        7,
+        8
+      ];
+
+      for (int i = 0; i < meshGenerator.indices.length; ++i) {
+        expect(meshGenerator.indices[i], equals(expected[i]));
+      }
     });
   });
 }
