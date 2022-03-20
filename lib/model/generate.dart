@@ -61,6 +61,7 @@ class MeshGenerator {
     //TODO
   }
 
+  // see sketches/grid.png
   void _calcVerticesAndIndices(int n) {
     for (int x = 0; x <= n; ++x) {
       for (int y = 0; y <= n; ++y) {
@@ -69,16 +70,28 @@ class MeshGenerator {
         if (x != n && y != n) {
           final N = n + 1;
 
-          final leftDiagonal = N * x + y + 1;
-          final rightDiagonal = N * (x + 1) + y;
+          final x0 = N * x;
+          final x1 = N * (x + 1);
 
-          indices.add(rightDiagonal);
-          indices.add(leftDiagonal);
-          indices.add(N * x + y);
+          final y0 = y;
+          final y1 = y + 1;
 
-          indices.add(leftDiagonal);
-          indices.add(rightDiagonal);
-          indices.add(N * (x + 1) + y + 1);
+          // a b
+          // c d
+
+          final a = x0 + y1;
+          final b = x1 + y1;
+
+          final c = x0 + y0;
+          final d = x1 + y0;
+
+          indices.add(d);
+          indices.add(a);
+          indices.add(c);
+
+          indices.add(a);
+          indices.add(d);
+          indices.add(b);
         }
       }
     }
