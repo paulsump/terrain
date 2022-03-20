@@ -31,7 +31,11 @@ class Shape extends StatelessWidget {
       colors.add(_getColor(normals[i], color));
     }
 
-    return Triangles(offsets: offsets, colors: colors, indices: mesh.indices);
+    return Triangles(
+      offsets: offsets,
+      colors: colors,
+      indices: mesh.indices,
+    );
   }
 }
 

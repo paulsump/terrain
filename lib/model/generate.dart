@@ -11,7 +11,7 @@ final noWarn = [out, _rotateX];
 /// See README.md
 /// This function is the interface to this file
 Mesh generateMesh() {
-  final mesh = generateTriangleStripMesh(2);
+  final mesh = generateTriangleStripMesh(3);
   // _rotateX(75, mesh);
 
   return mesh;
@@ -21,13 +21,6 @@ Mesh generateMesh() {
 Mesh generateTriangleStripMesh(int n) {
   final vertices = <Vector3>[];
 
-  // final indices = <int>[1, 2, 0, 1, 2, 3];
-  // final indices = <int>[
-  //   1, 3, 0, 1, 3, 4,
-  //   2, 4, 1, 2, 4, 5,
-  //   4, 6, 3, 4, 6, 7,
-  //   5, 7, 4, 5, 7, 8,
-  // ];
   final indices = <int>[];
   final step = 1 / n;
 
