@@ -40,14 +40,18 @@ class Mesh {
   const Mesh({
     required this.vertices,
     required this.normals,
+    required this.indices,
   });
 
   final List<Vector3> vertices;
   final List<Vector3> normals;
+  final List<int> indices;
 
   @override
   String toString() {
-    return '$vertices';
+    // return '$vertices';
+    // return '$indices';
+    return '$vertices\n$indices';
     // return '$vertices\n$normals';
   }
 }

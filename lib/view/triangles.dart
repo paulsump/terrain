@@ -6,16 +6,30 @@ import 'package:terrain/out.dart';
 
 const noWarn = out;
 
+_debugColor(n) {
+  final colors = <Color>[];
+  for (int i = 0; i < n; ++i) {
+    colors.add(i % 3 == 0
+        ? Colors.blue
+        : i.isEven
+            ? Colors.green
+            : Colors.red);
+  }
+  return colors;
+}
+
 /// Draw a list o vertex shaded triangles.
 class Triangles extends StatelessWidget {
   const Triangles({
     Key? key,
     required this.offsets,
     required this.colors,
+    required this.indices,
   }) : super(key: key);
 
   final List<Offset> offsets;
   final List<Color> colors;
+  final List<int> indices;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +38,9 @@ class Triangles extends StatelessWidget {
         Vertices(
           VertexMode.triangleStrip,
           offsets,
-          colors: colors,
+          colors: _debugColor(offsets.length),
+          // colors:colors,
+          indices: indices,
         ),
       ),
     );

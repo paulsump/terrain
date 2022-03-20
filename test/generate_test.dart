@@ -11,7 +11,8 @@ const noWarn = out;
 void main() {
   group('generateTriangleStripMesh', () {
     test('n = 4', () {
-      final mesh = generateTriangleStripMesh(4);
+      // final mesh = generateTriangleStripMesh(1);
+      final mesh = generateMesh();
       out(mesh);
       // expect(normal, equals(expected));
     });
