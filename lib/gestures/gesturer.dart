@@ -3,8 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:terrain/gestures/gesture_handler.dart';
 import 'package:terrain/gestures/pan_zoom.dart';
+import 'package:terrain/gestures/rotator.dart';
+import 'package:terrain/out.dart';
 
-/// Handle gestures, passing them to [PanZoomer].
+const noWarn = [out];
+
+/// Handle gestures, passing them to [Rotator] or [PanZoomer].
 ///
 /// Stateful because of mutable fields.
 class Gesturer extends StatefulWidget {
@@ -17,6 +21,7 @@ class Gesturer extends StatefulWidget {
 class GesturerState extends State<Gesturer> {
   final GestureHandler panZoomer = PanZoomer();
 
+  final rotator = Rotator();
   late GestureHandler gestureHandler;
 
   bool tapped = false;
@@ -35,13 +40,27 @@ class GesturerState extends State<Gesturer> {
 
         gestureHandler = panZoomer;
         panZoomer.start(details.focalPoint, context);
+
+        // if tapped, use that fromPosition since it's where the user started, and therefore better
+        if (!tapped) {
+          rotator.start(details.focalPoint, context);
+        }
       },
       onScaleUpdate: (details) {
         n++;
 
         totalScale += details.scale;
 
-        gestureHandler.update(details.focalPoint, details.scale, context);
+        if (n > 9) {
+          if (totalScale / n == 1 && gestureHandler != rotator) {
+            gestureHandler = rotator;
+
+            if (tapped) {
+              rotator.start(tapPoint, context);
+            }
+          }
+          gestureHandler.update(details.focalPoint, details.scale, context);
+        }
       },
       onScaleEnd: (details) {
         tapped = false;

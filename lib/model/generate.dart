@@ -64,6 +64,7 @@ class MeshGenerator {
       var normal = Vector3.zero();
       var s = '[';
 
+      //TODO USe x and y to get surrounding face normals
       for (int f = -4; f < 4; ++f) {
         final faceIndex = f + i ~/ 3;
 
