@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:terrain/gestures/pan_zoom.dart';
+import 'package:terrain/gestures/rotator.dart';
 import 'package:terrain/model/generate.dart';
 import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
@@ -29,6 +30,7 @@ class TheApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PanZoomNotifier()),
+        ChangeNotifierProvider(create: (_) => RotationNotifier()),
         ChangeNotifierProvider(create: (_) => ShapeNotifier()),
       ],
       child: MaterialApp(

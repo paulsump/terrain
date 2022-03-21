@@ -15,8 +15,7 @@ Mesh getMesh(BuildContext context, {required bool listen}) =>
 
 ShapeNotifier getShapeNotifier(
   BuildContext context, {
-  required bool listen,
-}) =>
+  required bool listen}) =>
     Provider.of<ShapeNotifier>(context, listen: listen);
 
 /// Access to the [Mesh].

@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:terrain/gestures/rotator.dart';
 import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:terrain/view/triangles.dart';
@@ -25,9 +26,16 @@ class Shape extends StatelessWidget {
     final colors = <Color>[];
 
     const Color color = Colors.white60;
-    for (int i = 0; i < vertices.length; ++i) {
-      offsets.add(_flipY(vertices[i]));
+    final rotationNotifier = getRotationNotifier(context, listen: true);
 
+    final degreesY = rotationNotifier.yDegrees;
+    final transform = Matrix4.rotationY(vec_math.radians(degreesY));
+
+    for (int i = 0; i < vertices.length; ++i) {
+      transform.transform3(vertices[i]);
+      transform.transform3(normals[i]);
+
+      offsets.add(_flipY(vertices[i]));
       colors.add(_getColor(normals[i], color));
     }
 
