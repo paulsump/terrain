@@ -8,10 +8,7 @@ import 'package:terrain/model/mesh.dart';
 import 'package:terrain/out.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-final noWarn = [
-  out,
-  _rotateX,
-];
+final noWarn = [out, _rotateX];
 
 /// See README.md
 /// This function is the interface to this file
@@ -30,14 +27,15 @@ Mesh generateMesh() {
 /// generate a triangle strip mesh
 class MeshGenerator {
   /// n = num quads in both x and y
-  MeshGenerator(int n) {
-    _calcVerticesAndIndices(n);
+  MeshGenerator(this.n) {
+    _calcVerticesAndIndices();
   }
 
   final vertices = <Vector3>[];
   final normals = <Vector3>[];
 
   final indices = <int>[];
+  final int n;
 
   void setHeights() {
     for (final vertex in vertices) {
@@ -58,34 +56,46 @@ class MeshGenerator {
   }
 
   void calcVertexNormals(List<Vector3> faceNormals) {
-    for (int i = 0; i < vertices.length; ++i) {
-      double count = 0;
+    for (int x = -1; x <= n; ++x) {
+      for (int y = -1; y <= n; ++y) {
+        final N = n + 1;
 
-      var normal = Vector3.zero();
-      var s = '[';
+        final x0 = N * x;
+        final x1 = N * (x + 1);
+        final y0 = y;
+        final y1 = y + 1;
 
-      //TODO USe x and y to get surrounding face normals
-      for (int f = -4; f < 4; ++f) {
-        final faceIndex = f + i ~/ 3;
+        final a = x0 + y1;
+        final b = x1 + y1;
+        final c = x0 + y0;
+        final d = x1 + y0;
 
-        if (0 <= faceIndex && faceIndex < faceNormals.length) {
-          count += 1;
+        double count = 0;
+        var normal = Vector3.zero();
 
-          s += ' $f,${i ~/ 3}';
-          normal += faceNormals[faceIndex];
-        } else {
-          // s += '_';
+        void _add(int i) {
+          if (0 <= i && i < vertices.length) {
+            final faceIndex = i ~/ 3;
+
+            count += 2;
+            normal += faceNormals[faceIndex];
+            normal += faceNormals[faceIndex + 1];
+          }
         }
-      }
 
-      // out('$i, ${count.toInt()}' + s);
-      normals.add(normal / count);
+        _add(a);
+        _add(b);
+        _add(c);
+        _add(d);
+        out('$b: $count');
+        normals.add(normal / count);
+      }
     }
   }
 
   /// Vertical strips of two triangles making a square
   /// see sketches/grid.png
-  void _calcVerticesAndIndices(int n) {
+  void _calcVerticesAndIndices() {
     for (int x = 0; x <= n; ++x) {
       for (int y = 0; y <= n; ++y) {
         vertices.add(Vector3(x / n, y / n, 0));
