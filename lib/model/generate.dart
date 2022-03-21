@@ -56,8 +56,10 @@ class MeshGenerator {
   }
 
   void calcVertexNormals(List<Vector3> faceNormals) {
-    for (int x = -1; x <= n; ++x) {
-      for (int y = -1; y <= n; ++y) {
+    // out(vertices.length);
+    // out(faceNormals.length);
+    for (int x = -1; x < n; ++x) {
+      for (int y = -1; y < n; ++y) {
         final N = n + 1;
 
         final x0 = N * x;
@@ -65,29 +67,28 @@ class MeshGenerator {
         final y0 = y;
         final y1 = y + 1;
 
-        final a = x0 + y1;
-        final b = x1 + y1;
-        final c = x0 + y0;
-        final d = x1 + y0;
-
         double count = 0;
         var normal = Vector3.zero();
+        var s = '';
 
-        void _add(int i) {
-          if (0 <= i && i < vertices.length) {
-            final faceIndex = i ~/ 3;
+        void _add(int x, int y) {
+          if (0 <= x && x < N) {
+            if (0 <= y && y < N) {
+              final faceIndex = x + y;
 
-            count += 2;
-            normal += faceNormals[faceIndex];
-            normal += faceNormals[faceIndex + 1];
+              count += 2;
+              normal += faceNormals[faceIndex];
+              normal += faceNormals[faceIndex + 1];
+              s += '$faceIndex, ${faceIndex + 1} ';
+            }
           }
         }
 
-        _add(a);
-        _add(b);
-        _add(c);
-        _add(d);
-        out('$b: $count');
+        //_add(x0, y1);
+        _add(x1, y1);
+        //  _add(x0, y0);
+        //_add(x1, y0);
+        out('${x1 + y1}: ${count.toInt()} [$s]');
         normals.add(normal / count);
       }
     }
